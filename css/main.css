@@ -58,6 +58,7 @@ h1:hover{
   text-align: center;
   text-transform: uppercase;
   text-decoration: underline;
+  animation: rotate 2s infinite ease-in-out;
 }
 
 body{
@@ -76,4 +77,19 @@ body{
 }
 
 
+/* 
+Transiciones (transition) Permiten cambiar propiedades de forma gradual.
+Animaciones (@keyframes) Definen secuencias de movimiento personalizadas.
+Transformaciones (transform) Permiten rotar, escalar y mover elementos.
+*/
 
+/* ! ANIMACIONES */
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
