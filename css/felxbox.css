@@ -1,0 +1,18 @@
+
+.contenedor{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: lightgray;
+}
+
+.caja{
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
