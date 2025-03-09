@@ -72,6 +72,101 @@
       <dd>Lenguaje de programación para agregar interactividad.</dd>
     </dl>
 
+    <!-- ! Etiquetas semánticas para mejorar posicionamiento -->
+
+    <section></section>
+    <article></article>
+    <aside></aside>
+    <nav></nav>
+    <header></header>
+    <footer></footer>
+
+    <!-- ! Tablas -->
+
+    <table border="1">
+      <caption>
+        Lista de Estudiantes
+      </caption>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Edad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>María</td>
+          <td>22</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Carlos</td>
+          <td>25</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">Total de estudiantes: 2</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <br />
+    <br />
+    <br />
+
+    <!-- ! Formularios -->
+
+    <!-- ? Action se utiliza para indicar la URL a la que se enviarán los datos -->
+    <!-- ? Method se utiliza para indicar el método de envío de los datos (GET o POST) -->
+    <form action="procesar.php" method="POST">
+      <fieldset>
+        <legend>Información Personal</legend>
+
+        <!-- ? el for se utiliza para asociar el label con el input -->
+        <!-- ? el id se utiliza para asociar el label con el input -->
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required />
+
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" rows="4"></textarea>
+
+        <label for="pais">País:</label>
+        <select id="pais" name="pais">
+          <option value="colombia">Colombia</option>
+          <option value="mexico">México</option>
+          <option value="españa">España</option>
+        </select>
+
+        <button type="submit">Enviar</button>
+        <button type="reset">Borrar</button>
+      </fieldset>
+    </form>
+
+    <br /><br /><br />
+
+    <!-- ! Hipervínculos -->
+
+    <a href="https://www.ejemplo.com">Visitar Ejemplo</a>
+    <a href="https://www.ejemplo.com" target="_blank">Abrir en nueva pestaña</a>
+
+    <a href="#seccion1">Ir a la Sección 1</a>
+    <!-- Destino del enlace -->
+    <h2 id="seccion1">Sección 1</h2>
+
+    <a href="mailto:correo@ejemplo.com">Enviar correo</a>
+    <a href="tel:+123456789">Llamar</a>
+    <a href="documento.pdf" download>Descargar PDF</a>
+
+    <br /><br /><br />
+    <br /><br /><br />
+
     
   </body>
 </html>
