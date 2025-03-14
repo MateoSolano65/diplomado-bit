@@ -258,3 +258,12 @@ console.log( "isArray() - ¿Es un array?:", isArrayResult2 ); // false
 // from()
 const fromResult = Array.from( "Hola" );
 console.log( "from() - Convertir a array:", fromResult ); // ["H","o","l","a"]
+
+
+
+// ! -----------------------DOM-----------------------
+
+let h1element = document.querySelector( "h1" );
+console.log( h1element );
+
+h1element.innerText = "Hola mundo";
