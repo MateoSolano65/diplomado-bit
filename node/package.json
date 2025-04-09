@@ -1,0 +1,13 @@
+{
+  "name": "project_node_bit",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Mateo Solano",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
