@@ -3,6 +3,7 @@
 const express = require( "express" );
 const app = express();
 const fs = require( "fs" );
+const multer = require( "multer" );
 
 // Habilitar JSON en las respuestas
 app.use( express.json() );
@@ -200,6 +201,18 @@ app.post("/upload-bits", (req, res) => {
   res.send("Archivo binario guardado");
 });
 
+// ! subir con multer por medio de multipart/form-data
+
+const upload = multer({ dest: "uploads/multer" });
+
+app.post("/upload-multer", upload.single("archivo"), (req, res) => {
+  
+  const tempPath = req.file.path; // Ruta temporal del archivo subido
+  const finalPath = `uploads/multer/${req.file.originalname}`; // Ruta final donde se guardará el archivo
+
+  fs.renameSync(tempPath, finalPath); // Renombrar el archivo de la ruta temporal a la ruta final
+  res.status(201).send("Archivo subido correctamente con multer");
+});
 
 app.listen( 3000, () => {
   console.log( "Servidor escuchando en el puerto 3000" );
