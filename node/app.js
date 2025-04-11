@@ -21,6 +21,8 @@ app.use( ( req, res, next ) => {
 } );
 
 
+app.use("/upload-bits", express.raw({ type: "*/*" })); // Middleware para manejar datos binarios
+
 const usuarios = [
   { id: 1, nombre: "Juan" },
   { id: 2, nombre: "Pedro" },
@@ -185,6 +187,19 @@ app.post( "/upload-extension", ( req, res ) => {
     archivoGuardado: nombreCompleto 
   });
 } );
+
+/**
+ * POST /upload-bits
+ * Carga un archivo en bits
+ * 
+ */
+app.post("/upload-bits", (req, res) => {
+  // const nombre = req.headers["x-filename"] || "archivo.bin"; //* Obtener el nombre del archivo desde el header
+  const nombre = req.query.nombre || "archivo.bin"; //* Obtener el nombre del archivo desde el query string
+  fs.writeFileSync(`./uploads/${nombre}`, req.body); // req.body es un Buffer
+  res.send("Archivo binario guardado");
+});
+
 
 app.listen( 3000, () => {
   console.log( "Servidor escuchando en el puerto 3000" );
