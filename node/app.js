@@ -2,6 +2,7 @@
 
 const express = require( "express" );
 const app = express();
+const fs = require( "fs" );
 
 // Habilitar JSON en las respuestas
 app.use( express.json() );
@@ -115,7 +116,75 @@ app.post( "/usuarios/:id/rol", ( req, res ) => {
 } );
 
 
+// ! Carga de Archivos
 
+/**
+ * POST /upload
+ * Carga un archivo en base64 y lo guarda en el servidor.
+ * Cuerpo de la solicitud:
+ *   - archivo: string (archivo en base64 a cargar)
+ *  - nombre: string (nombre del archivo a guardar con la extensión)
+ * Respuesta:
+ *   - 201: Archivo cargado correctamente.
+ *   - 400: Solicitud incorrecta.
+ */
+app.post( "/upload", ( req, res ) => {
+  const {contenido, nombre} = req.body;
+  
+  // const archivoBase64 = contenido.split( "," )[ 1 ]; // Extraer la parte base64 del string
+  const archivoBase64 = contenido; // Si ya es base64, no es necesario dividirlo
+
+  require( "fs" ).writeFileSync( nombre, Buffer.from( archivoBase64, "base64" ) );
+  // Guardar el archivo en el servidor (aquí puedes usar un módulo como "fs" para guardar el archivo)
+
+
+  // Aquí puedes guardar el archivo en el servidor o procesarlo como desees
+  // console.log( "Archivo cargado:", archivoBase64 );
+  res.status( 201 ).json( { message: "Archivo cargado correctamente" } );
+} );
+
+/**
+ * POST /upload-extension
+ * Carga un archivo en base64 y lo guarda en el servidor con nombre y extensión.
+ * Cuerpo de la solicitud:
+ *  - contenido: string (archivo en base64 a cargar)
+ * - nombre: string (nombre del archivo a guardar)
+ * - extension: string (extensión del archivo a guardar)
+ * Respuesta:
+ *  - 201: Archivo cargado correctamente.
+ * - 400: Solicitud incorrecta.
+ */
+app.post( "/upload-extension", ( req, res ) => {
+  const { contenido, nombre, extension } = req.body;
+  
+  // const archivoBase64 = contenido.split( "," )[ 1 ]; // Extraer la parte base64 del string
+  const archivoBase64 = contenido; // Si ya es base64, no es necesario dividirlo
+
+  // Determinar el nombre del archivo con extensión
+  let nombreCompleto = nombre;
+  
+  // Verificar si el nombre ya tiene una extensión
+  if (extension && !nombre.includes('.')) {
+    nombreCompleto = `${nombre}.${extension}`;
+  } else if (extension && !nombre.endsWith(`.${extension}`)) {
+    // Si el nombre tiene otra extensión pero queremos usar la especificada
+    nombreCompleto = `${nombre}.${extension}`;
+  }
+
+
+  const rutaArchivo = `./uploads/${nombreCompleto}`; // Ruta donde se guardará el archivo
+  // Crear la carpeta "uploads" si no existe
+  if (!fs.existsSync('./uploads')) {
+    fs.mkdirSync('./uploads');
+  }
+
+  fs.writeFileSync( rutaArchivo, Buffer.from( archivoBase64, "base64" ) );
+  
+  res.status( 201 ).json({ 
+    message: "Archivo cargado correctamente",
+    archivoGuardado: nombreCompleto 
+  });
+} );
 
 app.listen( 3000, () => {
   console.log( "Servidor escuchando en el puerto 3000" );
