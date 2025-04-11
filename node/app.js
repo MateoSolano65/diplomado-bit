@@ -75,6 +75,34 @@ app.delete( "/usuarios/:id", ( req, res ) => {
   res.json( { message: "Usuario eliminado" } );
 } );
 
+
+// ! Datos desde el body de la petición
+/**
+ * POST /usuarios/:id/rol
+ * Asigna un rol a un usuario existente.
+ * Parámetros de la ruta:
+ *  - id: number (ID del usuario al que se le asignará el rol)
+ * Cuerpo de la solicitud:
+ *  - rol: string (rol a asignar al usuario)
+ * Respuesta:
+ *  - 200: Usuario actualizado con el nuevo rol.
+ * - 404: Usuario no encontrado.
+ */
+app.post( "/usuarios/:id/rol", ( req, res ) => {
+  const requestBody = req.body;
+  const id = parseInt( req.params.id );
+  const usuario = usuarios.find( ( u ) => u.id === id );
+  if ( !usuario ) {
+    return res.status( 404 ).json( { error: "Usuario no encontrado" } );
+  }
+  
+  usuario.rol = requestBody.rol || usuario.rol;
+  res.json( usuario );
+} );
+
+
+
+
 app.listen( 3000, () => {
   console.log( "Servidor escuchando en el puerto 3000" );
 } );
