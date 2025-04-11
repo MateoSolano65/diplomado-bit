@@ -207,11 +207,16 @@ const upload = multer({ dest: "uploads/multer" });
 
 app.post("/upload-multer", upload.single("archivo"), (req, res) => {
   
-  const tempPath = req.file.path; // Ruta temporal del archivo subido
-  const finalPath = `uploads/multer/${req.file.originalname}`; // Ruta final donde se guardará el archivo
-
-  fs.renameSync(tempPath, finalPath); // Renombrar el archivo de la ruta temporal a la ruta final
-  res.status(201).send("Archivo subido correctamente con multer");
+  try {
+    const tempPath = req.file.path; // Ruta temporal del archivo subido
+    const finalPath = `uploads/multer/${req.file.originalname}`; // Ruta final donde se guardará el archivo
+    
+    fs.renameSync(tempPath, finalPath); // Renombrar el archivo de la ruta temporal a la ruta final
+    res.status(201).send("Archivo subido correctamente con multer");
+  } catch (error) {
+    
+    res.status(500).send("Error al subir el archivo");
+  }
 });
 
 app.listen( 3000, () => {
