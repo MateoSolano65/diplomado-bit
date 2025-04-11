@@ -6,6 +6,20 @@ const app = express();
 // Habilitar JSON en las respuestas
 app.use( express.json() );
 
+
+// ! Middlewares
+app.use( ( req, res, next ) => {
+  console.log( `Método: ${req.method}, URL: ${req.url}` );
+  next(); // Call next() to pass control to the next middleware
+} );
+
+app.use( ( req, res, next ) => {
+  req.requestTime = new Date().toISOString();
+  console.log( `Request Time: ${req.requestTime}` );
+  next(); // Call next() to pass control to the next middleware
+} );
+
+
 const usuarios = [
   { id: 1, nombre: "Juan" },
   { id: 2, nombre: "Pedro" },
