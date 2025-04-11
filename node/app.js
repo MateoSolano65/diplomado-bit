@@ -24,6 +24,17 @@ app.use( ( req, res, next ) => {
 
 app.use("/upload-bits", express.raw({ type: "*/*" })); // Middleware para manejar datos binarios
 
+// ! Middleware para autorizar el acceso a la API
+var checkAdmin = ( req, res, next ) => {
+  const user = req.body.user || req.query.user || req.headers.user;
+  const lowerCaseUser = user.toLowerCase(); // Convertir a minúsculas para evitar problemas de mayúsculas/minúsculas
+  if (lowerCaseUser !== "admin") {
+    return res.status( 403 ).json( { error: "Acceso denegado" } );
+  }
+  next(); // Call next() to pass control to the next middleware
+};
+
+
 const usuarios = [
   { id: 1, nombre: "Juan" },
   { id: 2, nombre: "Pedro" },
@@ -131,7 +142,7 @@ app.post( "/usuarios/:id/rol", ( req, res ) => {
  *   - 201: Archivo cargado correctamente.
  *   - 400: Solicitud incorrecta.
  */
-app.post( "/upload", ( req, res ) => {
+app.post( "/upload", checkAdmin, ( req, res ) => {
   const {contenido, nombre} = req.body;
   
   // const archivoBase64 = contenido.split( "," )[ 1 ]; // Extraer la parte base64 del string
@@ -210,7 +221,7 @@ app.post("/upload-multer", upload.single("archivo"), (req, res) => {
   try {
     const tempPath = req.file.path; // Ruta temporal del archivo subido
     const finalPath = `uploads/multer/${req.file.originalname}`; // Ruta final donde se guardará el archivo
-    
+
     fs.renameSync(tempPath, finalPath); // Renombrar el archivo de la ruta temporal a la ruta final
     res.status(201).send("Archivo subido correctamente con multer");
   } catch (error) {
