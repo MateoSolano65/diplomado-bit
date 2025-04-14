@@ -4,6 +4,7 @@ const express = require( "express" );
 const app = express();
 const fs = require( "fs" );
 const multer = require( "multer" );
+const mongo = require( "mongoose" );
 
 // Habilitar JSON en las respuestas
 app.use( express.json() );
@@ -234,3 +235,13 @@ app.listen( 3000, () => {
   console.log( "Servidor escuchando en el puerto 3000" );
 } );
 
+
+
+// ! Conxión a MongoDB
+mongo.connect( "mongodb://127.0.0.1:27017")
+.then(() => {
+  console.log("Conectado a MongoDB");
+})
+.catch(err => {
+  console.error("Error al conectar a MongoDB:", err);
+});
