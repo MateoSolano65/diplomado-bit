@@ -280,6 +280,29 @@ const usuarioSchema = new mongo.Schema({
 
 const Usuario = mongo.model( "Usuario", usuarioSchema );
 
+// * Crear un esquema de Factura
+const facturaSchema = new mongo.Schema({
+  numeroFactura: { 
+    type: String, 
+    required: true 
+  },
+  fechaFactura: { 
+    type: Date, 
+    default: Date.now 
+  },
+  total: { 
+    type: Number, 
+    required: true 
+  },
+  _usuarioId: { 
+    type: mongo.Schema.Types.ObjectId, 
+    ref: "Usuario", // Referencia al modelo Usuario
+    required: true 
+  }
+});
+
+const Factura = mongo.model( "Factura", facturaSchema );
+
 // // * Crear un nuevo usuario
 // const crearUsuario = async ( nombre, edad, correo ) => {
 //   try {
@@ -354,3 +377,74 @@ const Usuario = mongo.model( "Usuario", usuarioSchema );
 // }).catch((error) => {
 //   console.error("Error al eliminar el usuario:", error);
 // });
+
+
+
+
+
+
+// ! Usar AGREGATE para hacer un JOIN entre dos colecciones
+// Crear una factura y asociarla a un usuario
+// Usuario.findOne({correo: "mateo@examplenode.com"}).then((usuarioMateo) => {
+//   console.log("Usuario encontrado:", usuarioMateo);
+//   const idUsuario = usuarioMateo._id;
+//   const nuevaFactura = new Factura({
+//     numeroFactura: "FACC-0021",
+//     total: 100,
+//     _usuarioId: idUsuario // Cambiar usuarioId a _usuarioId
+//   });
+
+//   nuevaFactura.save()
+//     .then((factura) => {
+//       console.log("Factura creada:", factura);
+//     })
+//     .catch((error) => {
+//       console.error("Error al crear la factura:", error);
+//     });
+// }
+// ).catch((error) => {
+//   console.error("Error al leer el usuario:", error);
+// });
+
+Usuario.aggregate([
+  {
+    $lookup: {
+      from: "facturas", // Nombre de la colección a la que se va a hacer el join
+      localField: "_id", // Campo local en la colección de usuarios
+      foreignField: "_usuarioId", // Campo en la colección de facturas que hace referencia al usuario
+      as: "facturas" // Nombre del nuevo campo que contendrá los documentos relacionados
+    }
+  },
+  {
+    $match: { 
+      "facturas.0": { $exists: true } // Solo usuarios que tienen al menos una factura
+    }
+  },
+  {
+    $match: { edad: { $gte: 18 } } // Filtrar usuarios mayores de 18 años
+  },
+  {
+    $project: {
+      nombre: 1, // Incluir el nombre del usuario
+      facturas: 1 // Incluir las facturas relacionadas
+    }
+  }
+])
+  .then((usuariosConFacturas) => {
+    // console.log("Usuarios:",usuariosConFacturas);
+    // console.log("Usuarios con facturas:", JSON.stringify(usuariosConFacturas, null, 2));
+    // console.dir(usuariosConFacturas, { depth: null, colors: true }); // Mostrar el objeto completo sin truncar
+    
+    
+    usuariosConFacturas.forEach((usuario) => {
+      console.log(`Usuario: ${usuario.nombre}`);
+      console.log("Facturas:");
+      usuario.facturas.forEach((factura, i) => {
+        console.log(`  #${i + 1}:`, factura);
+      });
+    });
+    
+  })
+  .catch((error) => {
+    console.error("Error al hacer el join:", error);
+  });
