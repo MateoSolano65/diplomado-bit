@@ -238,10 +238,58 @@ app.listen( 3000, () => {
 
 
 // ! Conxión a MongoDB
-mongo.connect( "mongodb://127.0.0.1:27017")
+mongo.connect( "mongodb://127.0.0.1:27017/proyecto-bit-prueba")
 .then(() => {
   console.log("Conectado a MongoDB");
 })
 .catch(err => {
   console.error("Error al conectar a MongoDB:", err);
 });
+
+// * Crear un schema de usuario
+
+const usuarioSchema = new mongo.Schema({
+  nombre: { 
+    type: String, 
+    required: true 
+  },
+  edad: { 
+    type: Number, 
+    required: true 
+  },
+  correo: { 
+    type: String,
+    unique: true,
+    validate: {
+      validator: function(v) {
+        return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v); // Regex para validar correo
+      },
+      message: props => `${props.value} no es un correo válido!`
+    },
+    required: true 
+  },
+  fechaRegisrtro: {
+    type: Date, 
+    default: Date.now 
+  },
+  activo: { 
+    type: Boolean, 
+    default: true 
+  }
+});
+
+const Usuario = mongo.model( "Usuario2", usuarioSchema );
+
+// * Crear un nuevo usuario
+const crearUsuario = async ( nombre, edad, correo ) => {
+  try {
+    const nuevoUsuario = new Usuario( { nombre, edad, correo } );
+    await nuevoUsuario.save();
+    console.log( "Usuario creado:", nuevoUsuario );
+  } catch ( error ) {
+    console.error( "Error al crear el usuario:", error );
+  }
+};
+
+// * Crear un nuevo usuario
+crearUsuario("Juan", 30, "juan@example2.com");
