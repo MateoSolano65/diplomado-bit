@@ -278,18 +278,79 @@ const usuarioSchema = new mongo.Schema({
   }
 });
 
-const Usuario = mongo.model( "Usuario2", usuarioSchema );
+const Usuario = mongo.model( "Usuario", usuarioSchema );
+
+// // * Crear un nuevo usuario
+// const crearUsuario = async ( nombre, edad, correo ) => {
+//   try {
+//     const nuevoUsuario = new Usuario( { nombre, edad, correo } );
+//     await nuevoUsuario.save();
+//     console.log( "Usuario creado:", nuevoUsuario );
+//   } catch ( error ) {
+//     console.error( "Error al crear el usuario:", error );
+//   }
+// };
+
+// // * Crear un nuevo usuario
+// crearUsuario("Juan", 30, "juan@example2.com");
+
+
+
+// ! CRUD de usuarios con mongo desde Node.js
 
 // * Crear un nuevo usuario
-const crearUsuario = async ( nombre, edad, correo ) => {
-  try {
-    const nuevoUsuario = new Usuario( { nombre, edad, correo } );
-    await nuevoUsuario.save();
-    console.log( "Usuario creado:", nuevoUsuario );
-  } catch ( error ) {
-    console.error( "Error al crear el usuario:", error );
-  }
-};
+// const instanciarUsuario = new Usuario( );
 
-// * Crear un nuevo usuario
-crearUsuario("Juan", 30, "juan@example2.com");
+// instanciarUsuario.nombre = "Mateo desde Node";
+// instanciarUsuario.edad = 30;
+// instanciarUsuario.correo = "mateo@examplenode.com";
+
+// instanciarUsuario.save()
+//   .then( ( usuario ) => {
+//     console.log( "Usuario creado:", usuario );
+//   } )
+//   .catch( ( error ) => {
+//     console.error( "Error al crear el usuario:", error );
+//   } );
+
+
+// * Leer todos los usuarios
+// Usuario.find({edad: { $lt: 19 }})
+// Usuario.find({edad: { $gte: 18 }})
+//   .then((usuarios) => {
+//     console.log("Usuarios mayores de 18 años:", usuarios, "\n\n Usuarios:", usuarios.length);
+//   })
+//   .catch((error) => {
+//     console.error("Error al leer los usuarios:", error);
+//   });
+
+// Usuario.findOne({correo: "mateo@examplenode.com"}).then((usuarioMateo) => {
+//   console.log("Usuario encontrado:", usuarioMateo);
+//   const idUsuario = usuarioMateo._id;
+//   const nuevoNombre = "Mateo desde Node Actualizadox4";
+
+  // * Actualizar un usuario
+//   Usuario.findOneAndUpdate(
+//   { _id: idUsuario },
+//   { nombre: nuevoNombre },
+//   { new: true } // Devuelve el documento actualizado no el antiguo
+//   )
+//   .then((usuarioActualizado) => {
+//     console.log("Usuario actualizado:", usuarioActualizado);
+//   })
+//   .catch((error) => {
+//     console.error("Error al actualizar el usuario:", error);
+//   });
+// }
+// ).catch((error) => {
+//   console.error("Error al leer el usuario:", error);
+// }
+// );
+
+
+// * Eliminar un usuario
+// Usuario.findOneAndDelete({correo: "juan@example.com"}).then((usuarioEliminado) => {
+//   console.log("Usuario eliminado:", usuarioEliminado);
+// }).catch((error) => {
+//   console.error("Error al eliminar el usuario:", error);
+// });
