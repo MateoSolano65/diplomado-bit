@@ -54,3 +54,16 @@ interface IPersona {
   activo: boolean;
   direccion?: string; // ? indica que es opcional
 }
+
+// ? Usando los tipos personalizados
+let estadoPersona: Estado = Estado.Activo; // asigna el valor Activo a la variable estadoPersona
+let persona1: Persona = {
+  nombre: 'Juan',
+  edad: 25,
+  activo: true,
+}; // crea un objeto persona con los datos de la variable persona1
+let persona2: IPersona = {
+  nombre: 'Juan',
+  edad: 25,
+  activo: true,
+}; // crea un objeto persona con los datos de la variable persona2
