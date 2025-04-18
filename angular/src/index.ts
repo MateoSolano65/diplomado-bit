@@ -152,3 +152,30 @@ function saludarPersonaPorDefecto(
 } // recibe un parametro de tipo string y un parametro de tipo number con valor por defecto 18 y retorna un valor de tipo string o undefined
 
 console.log(saludarPersonaPorDefecto('Juan')); // llama a la funcion saludarPersonaPorDefecto con los parametros Juan y imprime el resultado en la consola
+
+console.log('-----------------POO-------------------');
+// ! Programación Orientada a Objetos
+// * Clases
+class PersonaClass {
+  // propiedades
+  nombre: string;
+  edad: number;
+  activo: boolean;
+
+  // constructor
+  constructor(nombre: string, edad: number, activo: boolean) {
+    this.nombre = nombre; // asigna el valor del parametro nombre a la propiedad nombre de la clase
+    this.edad = edad; // asigna el valor del parametro edad a la propiedad edad de la clase
+    this.activo = activo; // asigna el valor del parametro activo a la propiedad activo de la clase
+  }
+  // metodos
+  saludar(): string {
+    return `Hola ${this.nombre}, tienes ${this.edad} años`; // retorna un saludo con el nombre y la edad de la persona
+  }
+  despedir(): string {
+    return `Adiós ${this.nombre}`; // retorna un mensaje de despedida
+  }
+}
+const personaInstancia = new PersonaClass('Juan', 25, true); // crea una instancia de la clase PersonaClass con los datos de la variable personaClass
+console.log(personaInstancia.saludar()); // llama al metodo saludar de la instancia personaInstancia y imprime el resultado en la consola
+console.log(personaInstancia.despedir()); // llama al metodo despedir de la instancia personaInstancia y imprime el resultado en la consola
