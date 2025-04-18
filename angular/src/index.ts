@@ -179,3 +179,17 @@ class PersonaClass {
 const personaInstancia = new PersonaClass('Juan', 25, true); // crea una instancia de la clase PersonaClass con los datos de la variable personaClass
 console.log(personaInstancia.saludar()); // llama al metodo saludar de la instancia personaInstancia y imprime el resultado en la consola
 console.log(personaInstancia.despedir()); // llama al metodo despedir de la instancia personaInstancia y imprime el resultado en la consola
+
+console.log('-----------------------ASERCIONES-----------------------');
+// ! Aserciones de tipo
+// * Aserciones de tipo
+let dato: any = 'Hola mundo'; // crea una variable de tipo any con el valor Hola mundo
+let dato2: string = <string>dato; // asigna el valor de la variable dato a la variable dato2 como un string
+
+let dato3: string = dato as string; // asigna el valor de la variable dato a la variable dato3 como un string
+console.log(dato2); // imprime el valor de la variable dato2 en la consola
+
+// Ejemplo más claro de aserciones de tipo
+let datoSaludo: string = 'Hola mundo';
+let datoSaludo2: number = (datoSaludo as string).length; // asigna el valor de la variable datoSaludo a la variable datoSaludo2 como un number
+console.log(datoSaludo2); // imprime la longitud de la variable datoSaludo en la consola
