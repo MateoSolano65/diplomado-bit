@@ -32,13 +32,12 @@ let datoNulo: null = null; // se puede asignar null a una variable de tipo null
 // * Tipos compuestos
 let lista: number[] = [1, 2, 3, 4, 5]; // array de numeros
 let persona: [string, number] = ['Juan', 25]; // tupla de string y number
-enum Estado{
+enum Estado {
   Activo = 'Activo',
   Inactivo = 'Inactivo',
   Pendiente = 'Pendiente',
-  Completado = 'Completado'
+  Completado = 'Completado',
 } // define un conjunto de constantes con nombre
-
 
 // * Tipos personalizados
 type Persona = {
@@ -67,3 +66,43 @@ let persona2: IPersona = {
   edad: 25,
   activo: true,
 }; // crea un objeto persona con los datos de la variable persona2
+
+// ! Tuplas
+
+let tupla: [string, number, boolean] = ['Juan', 25, true]; // crea una tupla con los datos de la variable tupla
+
+console.log('tupla 1:', tupla);
+
+tupla[0] = 'Pedro'; // asigna el valor Pedro a la primera posicion de la tupla
+tupla[1] = 30; // asigna el valor 30 a la segunda posicion de la tupla
+tupla[2] = false; // asigna el valor false a la tercera posicion de la tupla
+console.log(tupla); // imprime la tupla en la consola
+
+// ! Enums
+
+enum diasDeLaSemana {
+  Lunes,
+  Martes,
+  Miércoles,
+  Jueves,
+  Viernes,
+  Sábado,
+  Domingo,
+}
+console.log(diasDeLaSemana.Lunes); // imprime 0
+console.log(diasDeLaSemana[0]); // imprime Lunes
+console.log(diasDeLaSemana[1]); // imprime Martes
+
+// diferencia entre enum y array
+let dias: string[] = [
+  'Lunes',
+  'Martes',
+  'Miércoles',
+  'Jueves',
+  'Viernes',
+  'Sábado',
+  'Domingo',
+];
+console.log(dias[0]); // imprime Lunes
+console.log(dias[1]); // imprime Martes
+// console.log(dias.Lunes); // ! no se puede acceder a la propiedad Lunes de un array
