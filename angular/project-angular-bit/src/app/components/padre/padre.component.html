@@ -1,0 +1,9 @@
+<div class="padre-container">
+  <div>Darth Vader</div>
+  <div (click)="hablandoConLuke()">Hablar:</div>
+  <div>Escuchando: {{ oidoDarth }}</div>
+  <app-hijo
+    [oidoLuke]="vozDarth"
+    (vozLuke)="escuchandoALuke($event)"
+  ></app-hijo>
+</div>
